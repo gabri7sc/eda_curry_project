@@ -123,20 +123,37 @@ def second_container_tab2( df1 ):
 
         return fig
 
-def first_container_tab3( df1 ):
+# def first_container_tab3( df1 ):
 
+#     # Filtering data
+#     aux = df1[['City', 'Road_traffic_density', 'Delivery_location_latitude', 'Delivery_location_longitude'
+#                ]].groupby( ['City', 'Road_traffic_density'] ).median().reset_index()
+#     aux = aux[( aux['City'] != 'NaN' ) & ( aux['Road_traffic_density'] != 'NaN' )]
+
+#     # Plotting using Folium
+#     map = folium.Map()
+
+#     for index, i in aux.iterrows():
+#         folium.Marker( [i['Delivery_location_latitude'],
+#                        i['Delivery_location_longitude']],
+#                       popup=i[['City', 'Road_traffic_density']] ).add_to( map )
+#     folium_static( map, width=1000, height=500 )
+
+#     return map
+    
+    def first_container_tab3( df1 ):
+        
     # Filtering data
     aux = df1[['City', 'Road_traffic_density', 'Delivery_location_latitude', 'Delivery_location_longitude'
                ]].groupby( ['City', 'Road_traffic_density'] ).median().reset_index()
-    aux = aux[( aux['City'] != 'NaN' ) & ( aux['Road_traffic_density'] != 'NaN' )]
+    aux = aux[pd.notna( aux['City'] ) & pd.notna( aux['Road_traffic_density'] )]
 
     # Plotting using Folium
     map = folium.Map()
 
     for index, i in aux.iterrows():
-        folium.Marker( [i['Delivery_location_latitude'],
-                       i['Delivery_location_longitude']],
-                      popup=i[['City', 'Road_traffic_density']] ).add_to( map )
+        folium.Marker( [i['Delivery_location_latitude'], i['Delivery_location_longitude']],
+                       popup=str( i['City'] ) + ', ' + str( i['Road_traffic_density'] ) ).add_to( map )
     folium_static( map, width=1000, height=500 )
 
     return map
