@@ -141,11 +141,10 @@ def second_container_tab2( df1 ):
 
 #     return map
     
-    def first_container_tab3( df1 ):
-        
+def first_container_tab3( df1 ):
+    
     # Filtering data
-    aux = df1[['City', 'Road_traffic_density', 'Delivery_location_latitude', 'Delivery_location_longitude'
-               ]].groupby( ['City', 'Road_traffic_density'] ).median().reset_index()
+    aux = df1[['City', 'Road_traffic_density', 'Delivery_location_latitude', 'Delivery_location_longitude']].groupby( ['City', 'Road_traffic_density'] ).median().reset_index()
     aux = aux[pd.notna( aux['City'] ) & pd.notna( aux['Road_traffic_density'] )]
 
     # Plotting using Folium
